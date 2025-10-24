@@ -8,7 +8,17 @@
 [node name="card_manager" type="Node2D" parent="."]
 script = ExtResource("1_bo1nx")
 
-[node name="card_slot" type="Node2D" parent="card_manager"]
+[node name="card_slot_1" type="Node2D" parent="card_manager"]
+position = Vector2(382, 170)
+
+[node name="card_slot_2" type="Node2D" parent="card_manager"]
+position = Vector2(516, 170)
+
+[node name="card_slot_3" type="Node2D" parent="card_manager"]
+position = Vector2(644, 170)
+
+[node name="card_slot_4" type="Node2D" parent="card_manager"]
+position = Vector2(777, 170)
 
 [node name="card_deck" type="Sprite2D" parent="."]
 position = Vector2(213, 170)

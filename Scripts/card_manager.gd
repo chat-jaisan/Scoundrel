@@ -6,6 +6,8 @@ var ranks = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"]
 var cardScene = preload("res://Scenes/card.tscn")
 var active_cards = []
 
+var selected_card: Node = null 
+
 # Dictionary to map suits to their corresponding texture paths
 var suit_to_texture_path = {
 	"C": "res://Sprites/cards/clubs/",
@@ -13,6 +15,13 @@ var suit_to_texture_path = {
 	"H": "res://Sprites/cards/hearts/",
 	"S": "res://Sprites/cards/spades/"
 }
+
+@onready var card_slots = [
+	$card_slot_1,
+	$card_slot_2,
+	$card_slot_3,
+	$card_slot_4
+]
 
 # Function to create a full deck of cards
 func create_deck():
@@ -51,22 +60,19 @@ func pick_random_cards(filtered_deck):
 	return random_cards
 
 func display_cards(cards):
-	var start_x = 370  # Starting X position for the first card
-	var start_y = 170  # Y position for all cards
-	var spacing = 120  # Horizontal spacing between cards
-
 	for i in range(cards.size()):
 		var card_instance = cardScene.instantiate()
-		add_child(card_instance)
-
-		# Set the position of the card
-		card_instance.position = Vector2(start_x + i * spacing, start_y)
+		
+		# Add the card to the corresponding slot
+		var slot = card_slots[i]
+		slot.add_child(card_instance)
+		card_instance.position = Vector2.ZERO  # Position relative to the slot
 
 		# Extract the suit from the card
 		var card = cards[i]
-		var suit = card.substr(card.length() - 1)  # Suit is always the last character
+		var suit = card.substr(card.length() - 1)
 
-		# Load the corresponding card texture based on the suit
+		# Load the corresponding card texture
 		if suit in suit_to_texture_path:
 			var texture_path = suit_to_texture_path[suit] + card + ".png"
 			var card_texture = load(texture_path)
@@ -85,6 +91,13 @@ func remove_card(card_name):
 		if active_cards[i] == card_name:
 			active_cards.remove_at(i)  # Remove the card from the list
 			break
+
+func on_card_selected(card: Node):
+	if selected_card and selected_card != card:
+		selected_card.hide_use_button()
+	
+	selected_card = card
+	card.show_use_button()
 
 func _ready():
 	pass
