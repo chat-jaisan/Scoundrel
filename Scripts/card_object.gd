@@ -15,6 +15,9 @@ var suit_to_texture_path = {
 	"S": "res://Sprites/cards/spades/"
 }
 
+# Button 
+@onready var button = $useButton
+
 # --- CREATE & FILTER DECK ---
 func create_deck() -> Array:
 	var deck = []
@@ -78,3 +81,11 @@ func _ready():
 	set_card_texture(chosen_card)
 
 	print("Card drawn: %s (value: %d)" % [chosen_card, card_value])
+
+
+func use_card() -> void:
+	$"..".visible = false  # Hide the card
+
+func _on_area_2d_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
+	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		button.visible = !button.visible  # Toggle button visibility
