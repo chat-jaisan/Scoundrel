@@ -32,4 +32,4 @@ offset_bottom = 307.0
 text = "Random
 "
 
-[connection signal="pressed" from="Button" to="card_manager" method="_on_button_pressed"]
+[connection signal="pressed" from="Button" to="card_manager" method="press_random"]
